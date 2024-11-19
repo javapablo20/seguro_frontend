@@ -6,5 +6,5 @@ export interface UserInfo {
     date: string,
     gender: string,
     password: string,
-    confirmpassword: string
+    confirmPassword: string
 }

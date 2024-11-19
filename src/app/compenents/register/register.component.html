@@ -3,83 +3,131 @@
         <i class="fa-solid text-blue text-lg fa-hand-holding-medical md:text-2xl"></i>
 
         <h1 class="font-semibold tracking-tight leading-relaxed text-xl mt-10 md:mt-20">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Sua saúde em boas mãos
         </h1>
-
+        
         <p class="mt-2 tracking-wide text-gray md:mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus dignissimos modi impedit dolorum quis sed.
+            Na Saúde+, cuidamos do seu bem-estar com os melhores planos de saúde do mercado. Descubra a tranquilidade de estar
+            protegido em todos os momentos.
         </p>
     </aside>
 
     <aside class="flex flex-col w-full p-5">
         <article class="flex items-center gap-1 justify-between">
-            @if (!active) {
-                <i class="fa-regular text-blue fa-circle"></i>
-            } @else {
-                <i class="fa-solid text-blue fa-circle"></i>
-            }
+            <i *ngIf="!active" class="fa-regular text-blue fa-circle"></i>
+            <i *ngIf="active" class="fa-solid text-blue fa-circle"></i>
 
-            <span class="w-full border border-gray" [ngClass]="{ 'border-blue' : active}"></span>
+            <span class="w-full border border-gray" [ngClass]="{ 'border-blue': active }"></span>
             <i class="fa-regular text-gray fa-circle"></i>
         </article>
 
         <h2 class="font-semibold tracking-tight leading-relaxed text-xl mt-5 md:px-10">Sign Up</h2>
 
-        <form class="flex flex-col mt-5 md:px-10">
-
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-col mt-5 md:px-10">
             <div class="grid grid-cols-2 gap-2">
                 <div class="flex flex-col">
                     <label class="labels" for="firstName">Nome</label>
-                    <input class="border border-gray rounded-md px-2 py-2" type="text" name="firstName" placeholder="Nome">
+                    <input class="border border-gray rounded-md px-2 py-2" type="text" formControlName="firstname"
+                        placeholder="Nome" />
+                    <div *ngIf="formControls.firstname?.errors?.['required'] && formControls.firstname?.touched" class="text-red-500">
+                        O nome é obrigatório.
+                    </div>
+                    <div *ngIf="formControls.firstname?.errors?.['minlength'] && formControls.firstname?.touched" class="text-red-500">
+                        O nome deve ter pelo menos 2 caracteres.
+                    </div>
                 </div>
                 <div class="flex flex-col">
                     <label class="labels" for="lastName">Sobrenome</label>
-                    <input class="border border-gray rounded-md px-2 py-2" type="text" name="lastName" placeholder="Sobrenome">
+                    <input class="border border-gray rounded-md px-2 py-2" type="text" formControlName="lastname"
+                        placeholder="Sobrenome" />
+                    <div *ngIf="formControls.lastname?.errors?.['required'] && formControls.lastname?.touched" class="text-red-500">
+                        O sobrenome é obrigatório.
+                    </div>
+                    <div *ngIf="formControls.lastname?.errors?.['minlength'] && formControls.lastname?.touched" class="text-red-500">
+                        O sobrenome deve ter pelo menos 2 caracteres.
+                    </div>
                 </div>
             </div>
 
             <div class="flex flex-col mt-6">
                 <label class="labels" for="emailUser">Email</label>
-                <input class="inputs" type="email" name="emailUser" placeholder="Digite seu e-mail">
+                <input class="inputs" type="email" formControlName="email" placeholder="Digite seu e-mail" />
+                <div *ngIf="formControls.email?.errors?.['required'] && formControls.email?.touched" class="text-red-500">
+                    O email é obrigatório.
+                </div>
+                <div *ngIf="formControls.email?.errors?.['email'] && formControls.email?.touched" class="text-red-500">
+                    O email deve ser válido.
+                </div>
             </div>
 
             <div class="flex flex-col mt-6">
                 <label class="labels" for="cpfUser">CPF</label>
-                <input class="inputs" type="number" name="cpfUser" placeholder="Digite seu CPF">
+                <input class="inputs" type="number" formControlName="cpf" placeholder="Digite seu CPF" />
+                <div *ngIf="formControls.cpf?.errors?.['required'] && formControls.cpf?.touched" class="text-red-500">
+                    O CPF é obrigatório.
+                </div>
+                <div *ngIf="formControls.cpf?.errors?.['minlength'] && formControls.cpf?.touched" class="text-red-500">
+                    O CPF deve conter 11 dígitos.
+                </div>
+                <div *ngIf="formControls.cpf?.errors?.['maxlength'] && formControls.cpf?.touched" class="text-red-500">
+                    O CPF deve conter 11 dígitos.
+                </div>
             </div>
 
             <div class="flex flex-col mt-6">
                 <label class="labels" for="dateUser">Data de Nascimento</label>
-                <input class="inputs" type="date" name="dateUser">
+                <input class="inputs" type="date" formControlName="date" />
+                <div *ngIf="formControls.date?.errors?.['required'] && formControls.date?.touched" class="text-red-500">
+                    A data de nascimento é obrigatória.
+                </div>
             </div>
 
             <div class="flex flex-col mt-6">
-                <label class="labels" for="genederUser">Gênero</label>
-                
-                <select name="genederUser" class="inputs">
-                    <option value="" selected disabled>Selecionar</option>
+                <label class="labels" for="genderUser">Gênero</label>
+                <select formControlName="gender" class="inputs">
+                    <option value="" disabled selected>Selecionar</option>
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
                     <option value="O">Não Informar</option>
                 </select>
+                <div *ngIf="formControls.gender?.errors?.['required'] && formControls.gender?.touched" class="text-red-500">
+                    O gênero é obrigatório.
+                </div>
             </div>
 
             <div class="flex flex-col mt-6">
                 <label class="labels" for="passwordUser">Senha</label>
-                <input class="inputs" type="password" name="passwordUser">
+                <input class="inputs" type="password" formControlName="password" placeholder="Digite sua senha" />
+                <div *ngIf="formControls.password?.errors?.['required'] && formControls.password?.touched" class="text-red-500">
+                    A senha é obrigatória.
+                </div>
+                <div *ngIf="formControls.password?.errors?.['minlength'] && formControls.password?.touched" class="text-red-500">
+                    A senha deve ter pelo menos 8 caracteres.
+                </div>
             </div>
 
             <div class="flex flex-col mt-6">
                 <label class="labels" for="confirmPasswordUser">Confirmar Senha</label>
-                <input class="inputs" type="password" name="confirmPasswordUser">
+                <input class="inputs" type="password" formControlName="confirmPassword"
+                    placeholder="Confirme sua senha" />
+                <div
+                    *ngIf="formControls.confirmPassword?.errors?.['required'] && formControls.confirmPassword?.touched" class="text-red-500">
+                    A confirmação da senha é obrigatória.
+            </div>
+                <div *ngIf="!isPasswordMatching() && registerForm.touched" class="text-red-500">
+                    As senhas não coincidem.
+                </div>
             </div>
 
-            <button class="flex items-center justify-center gap-2 w-full mt-10 p-2 border rounded-md bg-blue text-white" (click)="activedButton()">
+            <button class="flex items-center justify-center gap-2 w-full mt-10 p-2 border rounded-md bg-blue text-white"
+                type="submit">
                 <p>Avançar</p>
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-    
-            <p class="text-gray tracking-wide text-sm text-center mt-1">Já possui conta? <span class="text-blue cursor-pointer">Clique aqui</span></p>
+
+            <p class="text-gray tracking-wide text-sm text-center mt-1">
+                Já possui conta? <span class="text-blue cursor-pointer">Clique aqui</span>
+            </p>
         </form>
     </aside>
 </section>

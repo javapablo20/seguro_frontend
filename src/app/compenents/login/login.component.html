@@ -1,35 +1,54 @@
 <section class="flex flex-col w-full h-full p-5 md:flex-row">
-    <aside class="flex flex-col justify-center w-full p-5 bg-infobg rounded-lg bg-cover bg-center h-screen" style="background-image: url('imagens/pexels-karolina-grabowska-4021810.jpg');;">
+    <aside class="flex flex-col justify-center w-full p-5 bg-infobg rounded-lg bg-cover bg-center h-screen">
         <i class="fa-solid text-blue text-lg fa-hand-holding-medical md:text-2xl"></i>
-    
+
         <h1 class="font-semibold tracking-tight leading-relaxed text-xl mt-10 md:mt-20">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Sua saúde em boas mãos
         </h1>
-    
+
         <p class="mt-2 tracking-wide text-gray md:mt-5">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus dignissimos modi impedit dolorum quis sed.
+            Na Saúde+, cuidamos do seu bem-estar com os melhores planos de saúde do mercado. Descubra a tranquilidade de estar
+            protegido em todos os momentos.
         </p>
     </aside>
     <aside class="flex flex-col w-full p-5">
-        
         <h2 class="font-semibold tracking-tight leading-relaxed text-xl mt-5 md:px-10">Sign In</h2>
 
-        <form class="flex flex-col mt-5 md:px-10">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="flex flex-col mt-5 md:px-10">
+            <!-- Campo de Email -->
             <div class="flex flex-col mt-6">
-                <label class="labels" for="emailUser">Email</label>
-                <input class="inputs" type="email" id="email" name="emailUser" placeholder="Digite seu e-mail">
-            </div>
-            <div class="flex flex-col mt-6">
-                <label class="labels" for="passwordUser">Senha</label>
-                <input class="inputs" type="password" id="password" name="passwordUser" placeholder="Digite sua senha">
+                <label class="labels" for="email">Email</label>
+                <input class="inputs" type="email" formControlName="email" placeholder="Digite seu e-mail" />
+                <div *ngIf="formControls.email?.errors?.['required'] && formControls.email?.touched" class="text-red-500">
+                    O email é obrigatório.
+                </div>
+                <div *ngIf="formControls.email?.errors?.['email'] && formControls.email?.touched" class="text-red-500">
+                    O email deve ser válido.
+                </div>
             </div>
 
-            <button class="flex items-center justify-center gap-2 w-full mt-10 p-2 border rounded-md bg-blue text-white" (click)="activedButton()">
+            <!-- Campo de Senha -->
+            <div class="flex flex-col mt-6">
+                <label class="labels" for="password">Senha</label>
+                <input class="inputs" type="password" formControlName="password" placeholder="Digite sua senha" />
+                <div *ngIf="formControls.password?.errors?.['required'] && formControls.password?.touched" class="text-red-500">
+                    A senha é obrigatória.
+                </div>
+                <div *ngIf="formControls.password?.errors?.['minlength'] && formControls.password?.touched" class="text-red-500">
+                    A senha deve ter pelo menos 6 caracteres.
+                </div>
+            </div>
+
+            <!-- Botão de Enviar -->
+            <button type="submit"
+                class="flex items-center justify-center gap-2 w-full mt-10 p-2 border rounded-md bg-blue text-white">
                 <p>Entrar</p>
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-            <p class="text-gray tracking-wide text-sm text-center mt-1">Ainda não possui conta? <span
-                    class="text-blue cursor-pointer">Clique aqui</span></p>
+
+            <p class="text-gray tracking-wide text-sm text-center mt-1">
+                Ainda não possui conta? <span class="text-blue cursor-pointer">Clique aqui</span>
+            </p>
         </form>
     </aside>
 </section>
